@@ -537,7 +537,7 @@ assert_file_equals_golden() {
     if (( show_diff )); then
       __assert_golden__print_not_matching_show_diff_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_contents"
     elif (( is_mode_regexp )); then
-      __assert_golden__print_not_matching_regexp_msg 'assert_file_equals_golden' 'file contents' "$outarget_file_contentstput" "$golden_file_path" "$golden_file_contents"
+      __assert_golden__print_not_matching_regexp_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_path" "$golden_file_contents"
     else
       __assert_golden__print_not_matching_whole_contents_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_path" "$golden_file_contents"
     fi
