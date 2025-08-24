@@ -133,15 +133,15 @@ assert_equals_golden() {
   done
 
   if (( use_stdin_set_by_opt )) && [ $# -ne 1 ]; then
-    _assert_golden_print_incorrect_number_of_arguments_msg 'assert_equals_golden' "$#" 1
+    __assert_golden__print_incorrect_number_of_arguments_msg 'assert_equals_golden' "$#" 1
     return 1
   elif (( ! use_stdin_set_by_opt )) && [ $# -ne 2 ] ; then
-    _assert_golden_print_incorrect_number_of_arguments_msg 'assert_equals_golden' "$#" 2
+    __assert_golden__print_incorrect_number_of_arguments_msg 'assert_equals_golden' "$#" 2
     return 1
   fi
 
   if (( show_diff )) && (( is_mode_regexp )); then
-    _assert_golden_print_diff_regexp_incompat_msg 'assert_equals_golden'
+    __assert_golden__print_diff_regexp_incompat_msg 'assert_equals_golden'
     return 1
   fi
 
@@ -157,19 +157,19 @@ assert_equals_golden() {
 
   local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:+1}"
 
-  if ! _assert_golden_validate_file_path 'assert_equals_golden' 'Golden file' "$golden_file_path"; then
+  if ! __assert_golden__validate_file_path 'assert_equals_golden' 'Golden file' "$golden_file_path"; then
     return 1
   fi
 
   local golden_file_contents=
-  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_equals_golden' "$golden_file_path" "$allow_empty")"; then
+  if ! golden_file_contents="$(__assert_golden__read_golden_file_contents 'assert_equals_golden' "$golden_file_path" "$allow_empty")"; then
     return 1
   fi
 
   local -i assert_failed=0
   if (( is_mode_regexp )); then
     if [[ ! '' =~ ^${golden_file_contents}$ ]] && [[ '' =~ ^${golden_file_contents}$ ]] || (( $? == 2 )); then
-      _assert_golden_print_invalid_extended_regular_expression_msg 'assert_equals_golden'
+      __assert_golden__print_invalid_extended_regular_expression_msg 'assert_equals_golden'
       assert_failed=1
     elif ! [[ "$value" =~ ^${golden_file_contents}$ ]]; then
       assert_failed=1
@@ -180,20 +180,20 @@ assert_equals_golden() {
 
   if (( assert_failed )); then
     if (( show_diff )); then
-      _assert_golden_print_not_matching_show_diff_msg 'assert_equals_golden' 'value' "$value" "$golden_file_contents"
+      __assert_golden__print_not_matching_show_diff_msg 'assert_equals_golden' 'value' "$value" "$golden_file_contents"
     elif (( is_mode_regexp )); then
-      _assert_golden_print_not_matching_regexp_msg 'assert_equals_golden' 'value' "$value" "$golden_file_path" "$golden_file_contents"
+      __assert_golden__print_not_matching_regexp_msg 'assert_equals_golden' 'value' "$value" "$golden_file_path" "$golden_file_contents"
     else
-      _assert_golden_print_not_matching_whole_contents_msg 'assert_equals_golden' 'value' "$value" "$golden_file_path" "$golden_file_contents"
+      __assert_golden__print_not_matching_whole_contents_msg 'assert_equals_golden' 'value' "$value" "$golden_file_path" "$golden_file_contents"
     fi
 
     if (( update_goldens_on_failure )); then
       if ! (( is_mode_regexp )); then
-        _assert_golden_update_golden_file_contents_nonregexp 'assert_equals_golden' "$value" "$golden_file_path"
+        __assert_golden__update_golden_file_contents_nonregexp 'assert_equals_golden' "$value" "$golden_file_path"
       else
-        _assert_golden_update_golden_file_contents_regexp 'assert_equals_golden' "$value" "$golden_file_path"
+        __assert_golden__update_golden_file_contents_regexp 'assert_equals_golden' "$value" "$golden_file_path"
       fi
-      _assert_golden_print_updated_golden_file_msg 'assert_equals_golden'
+      __assert_golden__print_updated_golden_file_msg 'assert_equals_golden'
     fi
   fi
   return $assert_failed
@@ -320,31 +320,31 @@ assert_output_equals_golden() {
   done
 
   if [ $# -ne 1 ]; then
-    _assert_golden_print_incorrect_number_of_arguments_msg 'assert_output_equals_golden' "$#" 1
+    __assert_golden__print_incorrect_number_of_arguments_msg 'assert_output_equals_golden' "$#" 1
     return 1
   fi
 
   if (( show_diff )) && (( is_mode_regexp )); then
-    _assert_golden_print_diff_regexp_incompat_msg 'assert_output_equals_golden'
+    __assert_golden__print_diff_regexp_incompat_msg 'assert_output_equals_golden'
     return 1
   fi
 
   local -r golden_file_path="${1-}"
   local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:+1}"
 
-  if ! _assert_golden_validate_file_path 'assert_output_equals_golden' 'Golden file' "$golden_file_path"; then
+  if ! __assert_golden__validate_file_path 'assert_output_equals_golden' 'Golden file' "$golden_file_path"; then
     return 1
   fi
 
   local golden_file_contents=
-  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_output_equals_golden' "$golden_file_path" "$allow_empty")"; then
+  if ! golden_file_contents="$(__assert_golden__read_golden_file_contents 'assert_output_equals_golden' "$golden_file_path" "$allow_empty")"; then
     return 1
   fi
 
   local -i assert_failed=0
   if (( is_mode_regexp )); then
     if [[ ! '' =~ ^${golden_file_contents}$ ]] && [[ '' =~ ^${golden_file_contents}$ ]] || (( $? == 2 )); then
-      _assert_golden_print_invalid_extended_regular_expression_msg 'assert_output_equals_golden'
+      __assert_golden__print_invalid_extended_regular_expression_msg 'assert_output_equals_golden'
       assert_failed=1
     elif ! [[ "$output" =~ ^${golden_file_contents}$ ]]; then
       assert_failed=1
@@ -355,20 +355,20 @@ assert_output_equals_golden() {
 
   if (( assert_failed )); then
     if (( show_diff )); then
-      _assert_golden_print_not_matching_show_diff_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_contents"
+      __assert_golden__print_not_matching_show_diff_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_contents"
     elif (( is_mode_regexp )); then
-      _assert_golden_print_not_matching_regexp_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_path" "$golden_file_contents"
+      __assert_golden__print_not_matching_regexp_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_path" "$golden_file_contents"
     else
-      _assert_golden_print_not_matching_whole_contents_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_path" "$golden_file_contents"
+      __assert_golden__print_not_matching_whole_contents_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_path" "$golden_file_contents"
     fi
 
     if (( update_goldens_on_failure )); then
       if ! (( is_mode_regexp )); then
-        _assert_golden_update_golden_file_contents_nonregexp 'assert_output_equals_golden' "$output" "$golden_file_path"
+        __assert_golden__update_golden_file_contents_nonregexp 'assert_output_equals_golden' "$output" "$golden_file_path"
       else
-        _assert_golden_update_golden_file_contents_regexp 'assert_output_equals_golden' "$output" "$golden_file_path"
+        __assert_golden__update_golden_file_contents_regexp 'assert_output_equals_golden' "$output" "$golden_file_path"
       fi
-      _assert_golden_print_updated_golden_file_msg 'assert_output_equals_golden'
+      __assert_golden__print_updated_golden_file_msg 'assert_output_equals_golden'
     fi
   fi
   return $assert_failed
@@ -493,12 +493,12 @@ assert_file_equals_golden() {
   done
 
   if [ $# -ne 2 ]; then
-    _assert_golden_print_incorrect_number_of_arguments_msg 'assert_file_equals_golden' "$#" 2
+    __assert_golden__print_incorrect_number_of_arguments_msg 'assert_file_equals_golden' "$#" 2
     return 1
   fi
 
   if (( show_diff )) && (( is_mode_regexp )); then
-    _assert_golden_print_diff_regexp_incompat_msg 'assert_file_equals_golden'
+    __assert_golden__print_diff_regexp_incompat_msg 'assert_file_equals_golden'
     return 1
   fi
 
@@ -506,25 +506,25 @@ assert_file_equals_golden() {
   local -r golden_file_path="${2-}"
   local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:+1}"
 
-  if ! _assert_golden_validate_file_path 'assert_file_equals_golden' 'Target file' "$target_file_path" \
-    && _assert_golden_validate_file_path 'assert_file_equals_golden' 'Golden file' "$golden_file_path"; then
+  if ! __assert_golden__validate_file_path 'assert_file_equals_golden' 'Target file' "$target_file_path" \
+    && __assert_golden__validate_file_path 'assert_file_equals_golden' 'Golden file' "$golden_file_path"; then
     return 1
   fi
 
   local target_file_contents=
-  if ! target_file_contents="$(_assert_golden_read_file_contents 'assert_file_equals_golden' 'target file' "$target_file_path")"; then
+  if ! target_file_contents="$(__assert_golden__read_file_contents 'assert_file_equals_golden' 'target file' "$target_file_path")"; then
     return 1
   fi
 
   local golden_file_contents=
-  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_file_equals_golden' "$golden_file_path" "$allow_empty")"; then
+  if ! golden_file_contents="$(__assert_golden__read_golden_file_contents 'assert_file_equals_golden' "$golden_file_path" "$allow_empty")"; then
     return 1
   fi
 
   local -i assert_failed=0
   if (( is_mode_regexp )); then
     if [[ ! '' =~ ^${golden_file_contents}$ ]] && [[ '' =~ ^${golden_file_contents}$ ]] || (( $? == 2 )); then
-      _assert_golden_print_invalid_extended_regular_expression_msg 'assert_file_equals_golden'
+      __assert_golden__print_invalid_extended_regular_expression_msg 'assert_file_equals_golden'
       assert_failed=1
     elif ! [[ "$target_file_contents" =~ ^${golden_file_contents}$ ]]; then
       assert_failed=1
@@ -535,26 +535,26 @@ assert_file_equals_golden() {
 
   if (( assert_failed )); then
     if (( show_diff )); then
-      _assert_golden_print_not_matching_show_diff_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_contents"
+      __assert_golden__print_not_matching_show_diff_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_contents"
     elif (( is_mode_regexp )); then
-      _assert_golden_print_not_matching_regexp_msg 'assert_file_equals_golden' 'file contents' "$outarget_file_contentstput" "$golden_file_path" "$golden_file_contents"
+      __assert_golden__print_not_matching_regexp_msg 'assert_file_equals_golden' 'file contents' "$outarget_file_contentstput" "$golden_file_path" "$golden_file_contents"
     else
-      _assert_golden_print_not_matching_whole_contents_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_path" "$golden_file_contents"
+      __assert_golden__print_not_matching_whole_contents_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_path" "$golden_file_contents"
     fi
 
     if (( update_goldens_on_failure )); then
       if ! (( is_mode_regexp )); then
-        _assert_golden_update_golden_file_contents_nonregexp 'assert_file_equals_golden' "$target_file_contents" "$golden_file_path"
+        __assert_golden__update_golden_file_contents_nonregexp 'assert_file_equals_golden' "$target_file_contents" "$golden_file_path"
       else
-        _assert_golden_update_golden_file_contents_regexp 'assert_file_equals_golden' "$target_file_contents" "$golden_file_path"
+        __assert_golden__update_golden_file_contents_regexp 'assert_file_equals_golden' "$target_file_contents" "$golden_file_path"
       fi
-      _assert_golden_print_updated_golden_file_msg 'assert_file_equals_golden'
+      __assert_golden__print_updated_golden_file_msg 'assert_file_equals_golden'
     fi
   fi
   return $assert_failed
 }
 
-_assert_golden_print_incorrect_number_of_arguments_msg() {
+__assert_golden__print_incorrect_number_of_arguments_msg() {
   local -r assert_function_name="$1"
   local -r -i actual_arg_count="$2"
   local -r -i expected_arg_count="$3"
@@ -563,14 +563,14 @@ _assert_golden_print_incorrect_number_of_arguments_msg() {
   | batslib_decorate "ERROR: $assert_function_name"
 }
 
-_assert_golden_print_diff_regexp_incompat_msg() {
+__assert_golden__print_diff_regexp_incompat_msg() {
   local -r assert_function_name="$1"
 
   echo "\`--diff' not supported with \`--regexp'" \
   | batslib_decorate "ERROR: $assert_function_name"
 }
 
-_assert_golden_validate_file_path() {
+__assert_golden__validate_file_path() {
   local -r assert_function_name="$1"
   local -r file_description="$2"
   local -r file_path="$3"
@@ -587,13 +587,13 @@ _assert_golden_validate_file_path() {
   fi
 }
 
-_assert_golden_read_golden_file_contents() {
+__assert_golden__read_golden_file_contents() {
   local -r assert_function_name="$1"
   local -r golden_file_path="$2"
   local -r -i allow_empty="$3"
 
   local golden_file_contents=
-  if ! golden_file_contents="$(_assert_golden_read_file_contents "$assert_function_name" 'golden file' "$golden_file_path")"; then
+  if ! golden_file_contents="$(__assert_golden__read_file_contents "$assert_function_name" 'golden file' "$golden_file_path")"; then
     return 1
   fi
   if [ -z "$golden_file_contents" ] && ! (( allow_empty )); then
@@ -605,7 +605,7 @@ _assert_golden_read_golden_file_contents() {
   printf '%s' "$golden_file_contents"
 }
 
-_assert_golden_read_file_contents() {
+__assert_golden__read_file_contents() {
   local -r assert_function_name="$1"
   local -r file_description="$2"
   local -r file_path="$3"
@@ -623,14 +623,14 @@ _assert_golden_read_file_contents() {
   printf '%s' "$file_contents"
 }
 
-_assert_golden_print_invalid_extended_regular_expression_msg() {
+__assert_golden__print_invalid_extended_regular_expression_msg() {
   local -r assert_function_name="$1"
 
   echo "Invalid extended regular expression in golden file." \
   | batslib_decorate "ERROR: $assert_function_name"
 }
 
-_assert_golden_print_not_matching_show_diff_msg() {
+__assert_golden__print_not_matching_show_diff_msg() {
   local -r assert_function_name="$1"
   local -r contents_description="$2"
   local -r actual_contents="$3"
@@ -643,7 +643,7 @@ _assert_golden_print_not_matching_show_diff_msg() {
   | batslib_decorate "${assert_function_name}: $contents_description does not match golden"
 }
 
-_assert_golden_print_not_matching_regexp_msg() {
+__assert_golden__print_not_matching_regexp_msg() {
   local -r assert_function_name="$1"
   local -r contents_description="$2"
   local -r actual_contents="$3"
@@ -659,7 +659,7 @@ _assert_golden_print_not_matching_regexp_msg() {
   | batslib_decorate "${assert_function_name}: $contents_description does not match regexp golden"
 }
 
-_assert_golden_print_not_matching_whole_contents_msg() {
+__assert_golden__print_not_matching_whole_contents_msg() {
   local -r assert_function_name="$1"
   local -r contents_description="$2"
   local -r actual_contents="$3"
@@ -675,7 +675,7 @@ _assert_golden_print_not_matching_whole_contents_msg() {
   | batslib_decorate "${assert_function_name}: $contents_description does not match golden"
 }
 
-_assert_golden_update_golden_file_contents_nonregexp() {
+__assert_golden__update_golden_file_contents_nonregexp() {
   local -r assert_function_name="$1"
   local -r new_golden_contents="$2"
   local -r golden_file_path="$3"
@@ -688,7 +688,7 @@ _assert_golden_update_golden_file_contents_nonregexp() {
   fi
 }
 
-_assert_golden_update_golden_file_contents_regexp() {
+__assert_golden__update_golden_file_contents_regexp() {
   local -r assert_function_name="$1"
   local -r new_golden_contents="$2"
   local -r golden_file_path="$3"
@@ -735,7 +735,7 @@ _assert_golden_update_golden_file_contents_regexp() {
   fi
 }
 
-_assert_golden_print_updated_golden_file_msg() {
+__assert_golden__print_updated_golden_file_msg() {
   local -r assert_function_name="$1"
 
   echo "Golden file updated after mismatch." \
