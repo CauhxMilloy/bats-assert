@@ -163,21 +163,8 @@ assert_equals_golden() {
   fi
 
   local golden_file_contents=
-  # Load the contents from the file.
-  # Append a period (to be removed on the next line) so that trailing new lines are preserved.
-  golden_file_contents="$(cat "$golden_file_path" 2>/dev/null && printf '.')"
-  if (( $? != 0 )); then
-    echo "Failed to read golden file. File path: '$golden_file_path'" \
-    | batslib_decorate 'ERROR: assert_equals_golden' \
-    | fail
-    return $?
-  fi
-  golden_file_contents="${golden_file_contents%.}"
-  if [ -z "$golden_file_contents" ] && ! (( allow_empty )); then
-    echo "Golden file contents is empty. This may be an authoring error. Use \`--allow-empty\` if this is intentional." \
-    | batslib_decorate 'ERROR: assert_equals_golden' \
-    | fail
-    return $?
+  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_equals_golden' "$golden_file_path")"; then
+    return 1
   fi
 
   local -i assert_failed=0
@@ -375,21 +362,8 @@ assert_output_equals_golden() {
   fi
 
   local golden_file_contents=
-  # Load the contents from the file.
-  # Append a period (to be removed on the next line) so that trailing new lines are preserved.
-  golden_file_contents="$(cat "$golden_file_path" 2>/dev/null && printf '.')"
-  if [ $? -ne 0 ]; then
-    echo "Failed to read golden file. File path: '$golden_file_path'" \
-    | batslib_decorate 'ERROR: assert_output_equals_golden' \
-    | fail
-    return $?
-  fi
-  golden_file_contents="${golden_file_contents%.}"
-  if [ -z "$golden_file_contents" ] && ! (( allow_empty )); then
-    echo "Golden file contents is empty. This may be an authoring error. Use \`--allow-empty\` if this is intentional." \
-    | batslib_decorate 'ERROR: assert_output_equals_golden' \
-    | fail
-    return $?
+  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_output_equals_golden' "$golden_file_path")"; then
+    return 1
   fi
 
   local -i assert_failed=0
@@ -599,21 +573,8 @@ assert_file_equals_golden() {
   target_file_contents="${target_file_contents%.}"
 
   local golden_file_contents=
-  # Load the contents from the file.
-  # Append a period (to be removed on the next line) so that trailing new lines are preserved.
-  golden_file_contents="$(cat "$golden_file_path" 2>/dev/null && printf '.')"
-  if [ $? -ne 0 ]; then
-    echo "Failed to read golden file. File path: '$golden_file_path'" \
-    | batslib_decorate 'ERROR: assert_file_equals_golden' \
-    | fail
-    return $?
-  fi
-  golden_file_contents="${golden_file_contents%.}"
-  if [ -z "$golden_file_contents" ] && ! (( allow_empty )); then
-    echo "Golden file contents is empty. This may be an authoring error. Use \`--allow-empty\` if this is intentional." \
-    | batslib_decorate 'ERROR: assert_file_equals_golden' \
-    | fail
-    return $?
+  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_file_equals_golden' "$golden_file_path")"; then
+    return 1
   fi
 
   local -i assert_failed=0
@@ -703,6 +664,29 @@ _assert_golden_validate_file_path() {
     | batslib_decorate "ERROR: $assert_function_name"
     return 1
   fi
+}
+
+_assert_golden_read_golden_file_contents() {
+  local -r assert_function_name="$1"
+  local -r golden_file_path="$2"
+
+  local golden_file_contents=
+  # Load the contents from the file.
+  # Append a period (to be removed on the next line) so that trailing new lines are preserved.
+  golden_file_contents="$(cat "$golden_file_path" 2>/dev/null && printf '.')"
+  if [ $? -ne 0 ]; then
+    echo "Failed to read golden file. File path: '$golden_file_path'" \
+    | batslib_decorate "ERROR: $assert_function_name" >&2
+    return 1
+  fi
+  golden_file_contents="${golden_file_contents%.}"
+  if [ -z "$golden_file_contents" ] && ! (( allow_empty )); then
+    echo "Golden file contents is empty. This may be an authoring error. Use \`--allow-empty\` if this is intentional." \
+    | batslib_decorate "ERROR: $assert_function_name" >&2
+    return 1
+  fi
+
+  printf '%s' "$golden_file_contents"
 }
 
 _assert_golden_update_golden_file_contents_nonregexp() {
