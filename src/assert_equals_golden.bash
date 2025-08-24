@@ -239,56 +239,9 @@ assert_equals_golden() {
 
     if (( update_goldens_on_failure )); then
       if ! (( is_mode_regexp )); then
-        # Non-regex golden update is straight forward.
-        printf '%s' "$value" 2>/dev/null > "$golden_file_path"
-        if [[ $? -ne 0 ]]; then
-          echo "Failed to write into golden file during update: '$golden_file_path'." \
-          | batslib_decorate 'FAIL: assert_equals_golden' \
-          | fail
-          return $?
-        fi
+        _assert_golden_update_golden_file_contents_nonregexp 'assert_equals_golden' "$value" "$golden_file_path"
       else
-        # To do a best-approximation for regex goldens,
-        # try and use existing lines as a library for updated lines (preferring longer lines).
-        # This is done line by line on the asserted value.
-        # Unfortunately, this does not handle multi-line regex in the golden (e.g. `(.*\n){10}`).
-        # Any line guess which is not preferred can be manually corrected/updated by the author.
-        local -a output_lines=()
-        local -a sorted_golden_lines=()
-        local temp=
-        while IFS='' read -r temp; do
-          output_lines+=("$temp")
-        done < <(printf '%s' "$value" ; printf '\n')
-        while IFS='' read -r temp; do
-          sorted_golden_lines+=("$temp")
-        done < <(echo "$golden_file_contents" | awk '{ print length, $0 }' | sort -nrs | cut -d" " -f 2- ; printf '\n')
-        # First, clear out the golden file's contents (so new data can just be appended below).
-        : 2>/dev/null > "$golden_file_path"
-        if [[ $? -ne 0 ]]; then
-          echo "Failed to write into golden file during update: '$golden_file_path'." \
-          | batslib_decorate 'FAIL: assert_equals_golden' \
-          | fail
-          return $?
-        fi
-        # Go line by line over the output, looking for the best suggested replacement.
-        local best_guess_for_line=
-        for line_in_output in "${output_lines[@]}"; do
-          # Default the output line itself as the best guess for the new golden.
-          # Though, the output line needs to be properly escaped for when being used in regex matching (on subsequent runs of the test).
-          best_guess_for_line="$(echo "$line_in_output" | sed -E 's/([][\.()*+?{}|^$\\])/\\\1/g')"
-          for line_in_golden in "${sorted_golden_lines[@]}"; do
-            if [[ "$line_in_output" =~ ^${line_in_golden}$ ]]; then
-              # If there's a line from the previous golden output that matches, use that is the best guess instead.
-              # No need to escape special characters, as `line_in_golden` is already in proper form.
-              best_guess_for_line="$line_in_golden"
-              break
-            fi
-          done
-          if [ -s "$golden_file_path" ]; then
-            printf '\n' >> "$golden_file_path"
-          fi
-          printf '%s' "$best_guess_for_line" >> "$golden_file_path"
-        done
+        _assert_golden_update_golden_file_contents_regexp 'assert_equals_golden' "$value" "$golden_file_path"
       fi
       echo "Golden file updated after mismatch." \
       | batslib_decorate 'FAIL: assert_equals_golden' \
@@ -511,56 +464,9 @@ assert_output_equals_golden() {
 
     if (( update_goldens_on_failure )); then
       if ! (( is_mode_regexp )); then
-        # Non-regex golden update is straight forward.
-        printf '%s' "$output" 2>/dev/null > "$golden_file_path"
-        if [[ $? -ne 0 ]]; then
-          echo "Failed to write into golden file during update: '$golden_file_path'." \
-          | batslib_decorate 'FAIL: assert_output_equals_golden' \
-          | fail
-          return $?
-        fi
+        _assert_golden_update_golden_file_contents_nonregexp 'assert_output_equals_golden' "$output" "$golden_file_path"
       else
-        # To do a best-approximation for regex goldens,
-        # try and use existing lines as a library for updated lines (preferring longer lines).
-        # This is done line by line on the output.
-        # Unfortunately, this does not handle multi-line regex in the golden (e.g. `(.*\n){10}`).
-        # Any line guess which is not preferred can be manually corrected/updated by the author.
-        local -a output_lines=()
-        local -a sorted_golden_lines=()
-        local temp=
-        while IFS='' read -r temp; do
-          output_lines+=("$temp")
-        done < <(printf '%s' "$output" ; printf '\n')
-        while IFS='' read -r temp; do
-          sorted_golden_lines+=("$temp")
-        done < <(echo "$golden_file_contents" | awk '{ print length, $0 }' | sort -nrs | cut -d" " -f 2- ; printf '\n')
-        # First, clear out the golden file's contents (so new data can just be appended below).
-        : 2>/dev/null > "$golden_file_path"
-        if [[ $? -ne 0 ]]; then
-          echo "Failed to write into golden file during update: '$golden_file_path'." \
-          | batslib_decorate 'FAIL: assert_output_equals_golden' \
-          | fail
-          return $?
-        fi
-        # Go line by line over the output, looking for the best suggested replacement.
-        local best_guess_for_line=
-        for line_in_output in "${output_lines[@]}"; do
-          # Default the output line itself as the best guess for the new golden.
-          # Though, the output line needs to be properly escaped for when being used in regex matching (on subsequent runs of the test).
-          best_guess_for_line="$(echo "$line_in_output" | sed -E 's/([][\.()*+?{}|^$\\])/\\\1/g')"
-          for line_in_golden in "${sorted_golden_lines[@]}"; do
-            if [[ "$line_in_output" =~ ^${line_in_golden}$ ]]; then
-              # If there's a line from the previous golden output that matches, use that is the best guess instead.
-              # No need to escape special characters, as `line_in_golden` is already in proper form.
-              best_guess_for_line="$line_in_golden"
-              break
-            fi
-          done
-          if [ -s "$golden_file_path" ]; then
-            printf '\n' >> "$golden_file_path"
-          fi
-          printf '%s' "$best_guess_for_line" >> "$golden_file_path"
-        done
+        _assert_golden_update_golden_file_contents_regexp 'assert_output_equals_golden' "$output" "$golden_file_path"
       fi
       echo "Golden file updated after mismatch." \
       | batslib_decorate 'FAIL: assert_output_equals_golden' \
@@ -806,56 +712,9 @@ assert_file_equals_golden() {
 
     if (( update_goldens_on_failure )); then
       if ! (( is_mode_regexp )); then
-        # Non-regex golden update is straight forward.
-        printf '%s' "$target_file_contents" 2>/dev/null > "$golden_file_path"
-        if [[ $? -ne 0 ]]; then
-          echo "Failed to write into golden file during update: '$golden_file_path'." \
-          | batslib_decorate 'FAIL: assert_file_equals_golden' \
-          | fail
-          return $?
-        fi
+        _assert_golden_update_golden_file_contents_nonregexp 'assert_file_equals_golden' "$target_file_contents" "$golden_file_path"
       else
-        # To do a best-approximation for regex goldens,
-        # try and use existing lines as a library for updated lines (preferring longer lines).
-        # This is done line by line on the output.
-        # Unfortunately, this does not handle multi-line regex in the golden (e.g. `(.*\n){10}`).
-        # Any line guess which is not preferred can be manually corrected/updated by the author.
-        local -a output_lines=()
-        local -a sorted_golden_lines=()
-        local temp=
-        while IFS='' read -r temp; do
-          output_lines+=("$temp")
-        done < <(printf '%s' "$target_file_contents" ; printf '\n')
-        while IFS='' read -r temp; do
-          sorted_golden_lines+=("$temp")
-        done < <(echo "$golden_file_contents" | awk '{ print length, $0 }' | sort -nrs | cut -d" " -f 2- ; printf '\n')
-        # First, clear out the golden file's contents (so new data can just be appended below).
-        : 2>/dev/null > "$golden_file_path"
-        if [[ $? -ne 0 ]]; then
-          echo "Failed to write into golden file during update: '$golden_file_path'." \
-          | batslib_decorate 'FAIL: assert_file_equals_golden' \
-          | fail
-          return $?
-        fi
-        # Go line by line over the output, looking for the best suggested replacement.
-        local best_guess_for_line=
-        for line_in_output in "${output_lines[@]}"; do
-          # Default the output line itself as the best guess for the new golden.
-          # Though, the output line needs to be properly escaped for when being used in regex matching (on subsequent runs of the test).
-          best_guess_for_line="$(echo "$line_in_output" | sed -E 's/([][\.()*+?{}|^$\\])/\\\1/g')"
-          for line_in_golden in "${sorted_golden_lines[@]}"; do
-            if [[ "$line_in_output" =~ ^${line_in_golden}$ ]]; then
-              # If there's a line from the previous golden output that matches, use that is the best guess instead.
-              # No need to escape special characters, as `line_in_golden` is already in proper form.
-              best_guess_for_line="$line_in_golden"
-              break
-            fi
-          done
-          if [ -s "$golden_file_path" ]; then
-            printf '\n' >> "$golden_file_path"
-          fi
-          printf '%s' "$best_guess_for_line" >> "$golden_file_path"
-        done
+        _assert_golden_update_golden_file_contents_regexp 'assert_file_equals_golden' "$target_file_contents" "$golden_file_path"
       fi
       echo "Golden file updated after mismatch." \
       | batslib_decorate 'FAIL: assert_file_equals_golden' \
@@ -863,4 +722,67 @@ assert_file_equals_golden() {
     fi
   fi
   return $assert_failed
+}
+
+_assert_golden_update_golden_file_contents_nonregexp() {
+  local -r assert_function_name="$1"
+  local -r new_golden_contents="$2"
+  local -r golden_file_path="$3"
+
+  # Non-regex golden update is straight forward.
+  printf '%s' "$new_golden_contents" 2>/dev/null > "$golden_file_path"
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to write into golden file during update: '$golden_file_path'." \
+    | batslib_decorate "FAIL: $assert_function_name" \
+    | fail
+    return $?
+  fi
+}
+
+_assert_golden_update_golden_file_contents_regexp() {
+  local -r assert_function_name="$1"
+  local -r new_golden_contents="$2"
+  local -r golden_file_path="$3"
+
+  # To do a best-approximation for regex goldens,
+  # try and use existing lines as a library for updated lines (preferring longer lines).
+  # This is done line by line on the output.
+  # Unfortunately, this does not handle multi-line regex in the golden (e.g. `(.*\n){10}`).
+  # Any line guess which is not preferred can be manually corrected/updated by the author.
+  local -a output_lines=()
+  local -a sorted_golden_lines=()
+  local temp=
+  while IFS='' read -r temp; do
+    output_lines+=("$temp")
+  done < <(printf '%s' "$new_golden_contents" ; printf '\n')
+  while IFS='' read -r temp; do
+    sorted_golden_lines+=("$temp")
+  done < <(echo "$golden_file_contents" | awk '{ print length, $0 }' | sort -nrs | cut -d" " -f 2- ; printf '\n')
+  # First, clear out the golden file's contents (so new data can just be appended below).
+  : 2>/dev/null > "$golden_file_path"
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to write into golden file during update: '$golden_file_path'." \
+    | batslib_decorate "FAIL: $assert_function_name" \
+    | fail
+    return $?
+  fi
+  # Go line by line over the output, looking for the best suggested replacement.
+  local best_guess_for_line=
+  for line_in_output in "${output_lines[@]}"; do
+    # Default the output line itself as the best guess for the new golden.
+    # Though, the output line needs to be properly escaped for when being used in regex matching (on subsequent runs of the test).
+    best_guess_for_line="$(echo "$line_in_output" | sed -E 's/([][\.()*+?{}|^$\\])/\\\1/g')"
+    for line_in_golden in "${sorted_golden_lines[@]}"; do
+      if [[ "$line_in_output" =~ ^${line_in_golden}$ ]]; then
+        # If there's a line from the previous golden output that matches, use that is the best guess instead.
+        # No need to escape special characters, as `line_in_golden` is already in proper form.
+        best_guess_for_line="$line_in_golden"
+        break
+      fi
+    done
+    if [ -s "$golden_file_path" ]; then
+      printf '\n' >> "$golden_file_path"
+    fi
+    printf '%s' "$best_guess_for_line" >> "$golden_file_path"
+  done
 }
