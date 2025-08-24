@@ -123,9 +123,8 @@ assert_equals_golden() {
         ;;
       --*=|-*)
         echo "Unsupported flag '$1'." \
-        | batslib_decorate 'ERROR: assert_equals_golden' \
-        | fail
-        return $?
+        | batslib_decorate 'ERROR: assert_equals_golden'
+        return 1
         ;;
       *)
         break
@@ -311,9 +310,8 @@ assert_output_equals_golden() {
         ;;
       --*=|-*)
         echo "Unsupported flag '$1'." \
-        | batslib_decorate 'ERROR: assert_output_equals_golden' \
-        | fail
-        return $?
+        | batslib_decorate 'ERROR: assert_output_equals_golden'
+        return 1
         ;;
       *)
         break
@@ -485,9 +483,8 @@ assert_file_equals_golden() {
         ;;
       --*=|-*)
         echo "Unsupported flag '$1'." \
-        | batslib_decorate 'ERROR: assert_file_equals_golden' \
-        | fail
-        return $?
+        | batslib_decorate 'ERROR: assert_file_equals_golden'
+        return 1
         ;;
       *)
         break
@@ -616,8 +613,7 @@ _assert_golden_read_file_contents() {
   local file_contents=
   # Load the contents from the file.
   # Append a period (to be removed on the next line) so that trailing new lines are preserved.
-  file_contents="$(cat "$file_path" 2>/dev/null && printf '.')"
-  if [ $? -ne 0 ]; then
+  if ! file_contents="$(cat "$file_path" 2>/dev/null && printf '.')"; then
     echo "Failed to read ${file_description}. File path: '$file_path'" \
     | batslib_decorate "ERROR: $assert_function_name" >&2
     return 1
@@ -629,6 +625,7 @@ _assert_golden_read_file_contents() {
 
 _assert_golden_print_invalid_extended_regular_expression_msg() {
   local -r assert_function_name="$1"
+
   echo "Invalid extended regular expression in golden file." \
   | batslib_decorate "ERROR: $assert_function_name"
 }
