@@ -163,7 +163,7 @@ assert_equals_golden() {
   fi
 
   local golden_file_contents=
-  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_equals_golden' "$golden_file_path")"; then
+  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_equals_golden' "$golden_file_path" "$allow_empty")"; then
     return 1
   fi
 
@@ -181,30 +181,11 @@ assert_equals_golden() {
 
   if (( assert_failed )); then
     if (( show_diff )); then
-      {
-        echo "Golden file: $golden_file_path"
-        diff <(echo "$value") <(echo "$golden_file_contents")
-      } \
-      | batslib_decorate 'value does not match golden' \
-      | fail
+      _assert_golden_print_not_matching_show_diff_msg 'assert_equals_golden' 'value' "$value" "$golden_file_contents"
     elif (( is_mode_regexp )); then
-      {
-        echo "Golden file: $golden_file_path"
-        batslib_print_kv_multi \
-          'golden contents' "$golden_file_contents" \
-          'actual value'    "$value"
-      } \
-      | batslib_decorate 'value does not match regexp golden' \
-      | fail
+      _assert_golden_print_not_matching_regexp_msg 'assert_equals_golden' 'value' "$value" "$golden_file_path" "$golden_file_contents"
     else
-      {
-        echo "Golden file: $golden_file_path"
-        batslib_print_kv_multi \
-          'golden contents' "$golden_file_contents" \
-          'actual value'    "$value"
-      } \
-      | batslib_decorate 'value does not match golden' \
-      | fail
+      _assert_golden_print_not_matching_whole_contents_msg 'assert_equals_golden' 'value' "$value" "$golden_file_path" "$golden_file_contents"
     fi
 
     if (( update_goldens_on_failure )); then
@@ -213,9 +194,7 @@ assert_equals_golden() {
       else
         _assert_golden_update_golden_file_contents_regexp 'assert_equals_golden' "$value" "$golden_file_path"
       fi
-      echo "Golden file updated after mismatch." \
-      | batslib_decorate 'FAIL: assert_equals_golden' \
-      | fail
+      _assert_golden_print_updated_golden_file_msg 'assert_equals_golden'
     fi
   fi
   return $assert_failed
@@ -360,7 +339,7 @@ assert_output_equals_golden() {
   fi
 
   local golden_file_contents=
-  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_output_equals_golden' "$golden_file_path")"; then
+  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_output_equals_golden' "$golden_file_path" "$allow_empty")"; then
     return 1
   fi
 
@@ -378,30 +357,11 @@ assert_output_equals_golden() {
 
   if (( assert_failed )); then
     if (( show_diff )); then
-      {
-        echo "Golden file: $golden_file_path"
-        diff <(echo "$output") <(echo "$golden_file_contents")
-      } \
-      | batslib_decorate 'output does not match golden' \
-      | fail
+      _assert_golden_print_not_matching_show_diff_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_contents"
     elif (( is_mode_regexp )); then
-      {
-        echo "Golden file: $golden_file_path"
-        batslib_print_kv_multi \
-          'golden contents' "$golden_file_contents" \
-          'actual output'   "$output"
-      } \
-      | batslib_decorate 'output does not match regexp golden' \
-      | fail
+      _assert_golden_print_not_matching_regexp_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_path" "$golden_file_contents"
     else
-      {
-        echo "Golden file: $golden_file_path"
-        batslib_print_kv_multi \
-          'golden contents' "$golden_file_contents" \
-          'actual output'   "$output"
-      } \
-      | batslib_decorate 'output does not match golden' \
-      | fail
+      _assert_golden_print_not_matching_whole_contents_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_path" "$golden_file_contents"
     fi
 
     if (( update_goldens_on_failure )); then
@@ -410,9 +370,7 @@ assert_output_equals_golden() {
       else
         _assert_golden_update_golden_file_contents_regexp 'assert_output_equals_golden' "$output" "$golden_file_path"
       fi
-      echo "Golden file updated after mismatch." \
-      | batslib_decorate 'FAIL: assert_output_equals_golden' \
-      | fail
+      _assert_golden_print_updated_golden_file_msg 'assert_output_equals_golden'
     fi
   fi
   return $assert_failed
@@ -557,19 +515,12 @@ assert_file_equals_golden() {
   fi
 
   local target_file_contents=
-  # Load the contents from the file.
-  # Append a period (to be removed on the next line) so that trailing new lines are preserved.
-  target_file_contents="$(cat "$target_file_path" 2>/dev/null && printf '.')"
-  if [ $? -ne 0 ]; then
-    echo "Failed to read target file. File path: '$target_file_path'" \
-    | batslib_decorate 'ERROR: assert_file_equals_golden' \
-    | fail
-    return $?
+  if ! target_file_contents="$(_assert_golden_read_file_contents 'assert_file_equals_golden' 'target file' "$target_file_path")"; then
+    return 1
   fi
-  target_file_contents="${target_file_contents%.}"
 
   local golden_file_contents=
-  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_file_equals_golden' "$golden_file_path")"; then
+  if ! golden_file_contents="$(_assert_golden_read_golden_file_contents 'assert_file_equals_golden' "$golden_file_path" "$allow_empty")"; then
     return 1
   fi
 
@@ -587,30 +538,11 @@ assert_file_equals_golden() {
 
   if (( assert_failed )); then
     if (( show_diff )); then
-      {
-        echo "Golden file: $golden_file_path"
-        diff <(echo "$target_file_contents") <(echo "$golden_file_contents")
-      } \
-      | batslib_decorate 'file contents does not match golden' \
-      | fail
+      _assert_golden_print_not_matching_show_diff_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_contents"
     elif (( is_mode_regexp )); then
-      {
-        echo "Golden file: $golden_file_path"
-        batslib_print_kv_multi \
-          'golden contents'      "$golden_file_contents" \
-          'actual file contents' "$target_file_contents"
-      } \
-      | batslib_decorate 'file contents does not match regexp golden' \
-      | fail
+      _assert_golden_print_not_matching_regexp_msg 'assert_file_equals_golden' 'file contents' "$outarget_file_contentstput" "$golden_file_path" "$golden_file_contents"
     else
-      {
-        echo "Golden file: $golden_file_path"
-        batslib_print_kv_multi \
-          'golden contents'      "$golden_file_contents" \
-          'actual file contents' "$target_file_contents"
-      } \
-      | batslib_decorate 'file contents does not match golden' \
-      | fail
+      _assert_golden_print_not_matching_whole_contents_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_path" "$golden_file_contents"
     fi
 
     if (( update_goldens_on_failure )); then
@@ -619,9 +551,7 @@ assert_file_equals_golden() {
       else
         _assert_golden_update_golden_file_contents_regexp 'assert_file_equals_golden' "$target_file_contents" "$golden_file_path"
       fi
-      echo "Golden file updated after mismatch." \
-      | batslib_decorate 'FAIL: assert_file_equals_golden' \
-      | fail
+      _assert_golden_print_updated_golden_file_msg 'assert_file_equals_golden'
     fi
   fi
   return $assert_failed
@@ -663,17 +593,12 @@ _assert_golden_validate_file_path() {
 _assert_golden_read_golden_file_contents() {
   local -r assert_function_name="$1"
   local -r golden_file_path="$2"
+  local -r -i allow_empty="$3"
 
   local golden_file_contents=
-  # Load the contents from the file.
-  # Append a period (to be removed on the next line) so that trailing new lines are preserved.
-  golden_file_contents="$(cat "$golden_file_path" 2>/dev/null && printf '.')"
-  if [ $? -ne 0 ]; then
-    echo "Failed to read golden file. File path: '$golden_file_path'" \
-    | batslib_decorate "ERROR: $assert_function_name" >&2
+  if ! golden_file_contents="$(_assert_golden_read_file_contents "$assert_function_name" 'golden file' "$golden_file_path")"; then
     return 1
   fi
-  golden_file_contents="${golden_file_contents%.}"
   if [ -z "$golden_file_contents" ] && ! (( allow_empty )); then
     echo "Golden file contents is empty. This may be an authoring error. Use \`--allow-empty\` if this is intentional." \
     | batslib_decorate "ERROR: $assert_function_name" >&2
@@ -683,10 +608,74 @@ _assert_golden_read_golden_file_contents() {
   printf '%s' "$golden_file_contents"
 }
 
+_assert_golden_read_file_contents() {
+  local -r assert_function_name="$1"
+  local -r file_description="$2"
+  local -r file_path="$3"
+
+  local file_contents=
+  # Load the contents from the file.
+  # Append a period (to be removed on the next line) so that trailing new lines are preserved.
+  file_contents="$(cat "$file_path" 2>/dev/null && printf '.')"
+  if [ $? -ne 0 ]; then
+    echo "Failed to read ${file_description}. File path: '$file_path'" \
+    | batslib_decorate "ERROR: $assert_function_name" >&2
+    return 1
+  fi
+  file_contents="${file_contents%.}"
+
+  printf '%s' "$file_contents"
+}
+
 _assert_golden_print_invalid_extended_regular_expression_msg() {
   local -r assert_function_name="$1"
   echo "Invalid extended regular expression in golden file." \
   | batslib_decorate "ERROR: $assert_function_name"
+}
+
+_assert_golden_print_not_matching_show_diff_msg() {
+  local -r assert_function_name="$1"
+  local -r contents_description="$2"
+  local -r actual_contents="$3"
+  local -r golden_file_path="$4"
+
+  {
+    echo "Golden file: $golden_file_path"
+    diff <(echo "$actual_contents") <(echo "$golden_file_contents")
+  } \
+  | batslib_decorate "${assert_function_name}: $contents_description does not match golden"
+}
+
+_assert_golden_print_not_matching_regexp_msg() {
+  local -r assert_function_name="$1"
+  local -r contents_description="$2"
+  local -r actual_contents="$3"
+  local -r golden_file_path="$4"
+  local -r golden_file_contents="$5"
+
+  {
+    echo "Golden file: $golden_file_path"
+    batslib_print_kv_multi \
+      'golden contents' "$golden_file_contents" \
+      "actual $contents_description"    "$actual_contents"
+  } \
+  | batslib_decorate "${assert_function_name}: $contents_description does not match regexp golden"
+}
+
+_assert_golden_print_not_matching_whole_contents_msg() {
+  local -r assert_function_name="$1"
+  local -r contents_description="$2"
+  local -r actual_contents="$3"
+  local -r golden_file_path="$4"
+  local -r golden_file_contents="$5"
+
+  {
+    echo "Golden file: $golden_file_path"
+    batslib_print_kv_multi \
+      'golden contents' "$golden_file_contents" \
+      "actual $contents_description"    "$actual_contents"
+  } \
+  | batslib_decorate "${assert_function_name}: $contents_description does not match golden"
 }
 
 _assert_golden_update_golden_file_contents_nonregexp() {
@@ -747,4 +736,11 @@ _assert_golden_update_golden_file_contents_regexp() {
       printf '%s' "$best_guess_for_line" >> "$golden_file_path"
     done
   fi
+}
+
+_assert_golden_print_updated_golden_file_msg() {
+  local -r assert_function_name="$1"
+
+  echo "Golden file updated after mismatch." \
+  | batslib_decorate "FAIL: $assert_function_name"
 }
