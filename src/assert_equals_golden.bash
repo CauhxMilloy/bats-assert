@@ -434,7 +434,7 @@ assert_output_equals_golden() {
   fi
 
   local -r golden_file_path="${1-}"
-  local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:-0}"
+  local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:+1}"
 
   if [ -z "$golden_file_path" ]; then
     echo "Golden file path was not given or it was empty." \
@@ -705,7 +705,7 @@ assert_file_equals_golden() {
 
   local -r target_file_path="${1-}"
   local -r golden_file_path="${2-}"
-  local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:-0}"
+  local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:+1}"
 
   if [ -z "$target_file_path" ]; then
     echo "Target file path was not given or it was empty." \
