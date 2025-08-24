@@ -134,22 +134,16 @@ assert_equals_golden() {
   done
 
   if (( use_stdin_set_by_opt )) && [ $# -ne 1 ]; then
-    echo "Incorrect number of arguments: $#. Using stdin, expecting 1 argument." \
-    | batslib_decorate 'ERROR: assert_equals_golden' \
-    | fail
-    return $?
+    _assert_golden_print_incorrect_number_of_arguments_msg 'assert_equals_golden' "$#" 1
+    return 1
   elif (( ! use_stdin_set_by_opt )) && [ $# -ne 2 ] ; then
-    echo "Incorrect number of arguments: $#. Expected 2 arguments." \
-    | batslib_decorate 'ERROR: assert_equals_golden' \
-    | fail
-    return $?
+    _assert_golden_print_incorrect_number_of_arguments_msg 'assert_equals_golden' "$#" 2
+    return 1
   fi
 
   if (( show_diff )) && (( is_mode_regexp )); then
-    echo "\`--diff' not supported with \`--regexp'" \
-    | batslib_decorate 'ERROR: assert_equals_golden' \
-    | fail
-    return $?
+    _assert_golden_print_diff_regexp_incompat_msg 'assert_equals_golden'
+    return 1
   fi
 
   local value="$1"
@@ -164,17 +158,8 @@ assert_equals_golden() {
 
   local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:+1}"
 
-  if [ -z "$golden_file_path" ]; then
-    echo "Golden file path was not given or it was empty." \
-    | batslib_decorate 'ERROR: assert_equals_golden' \
-    | fail
-    return $?
-  fi
-  if [ ! -e "$golden_file_path" ]; then
-    echo "Golden file was not found. File path: '$golden_file_path'" \
-    | batslib_decorate 'ERROR: assert_equals_golden' \
-    | fail
-    return $?
+  if ! _assert_golden_validate_file_path 'assert_equals_golden' 'Golden file' "$golden_file_path"; then
+    return 1
   fi
 
   local golden_file_contents=
@@ -373,33 +358,20 @@ assert_output_equals_golden() {
   done
 
   if [ $# -ne 1 ]; then
-    echo "Incorrect number of arguments: $#. Expected 1 argument." \
-    | batslib_decorate 'ERROR: assert_output_equals_golden' \
-    | fail
-    return $?
+    _assert_golden_print_incorrect_number_of_arguments_msg 'assert_output_equals_golden' "$#" 1
+    return 1
   fi
 
   if (( show_diff )) && (( is_mode_regexp )); then
-    echo "\`--diff' not supported with \`--regexp'" \
-    | batslib_decorate 'ERROR: assert_output_equals_golden' \
-    | fail
-    return $?
+    _assert_golden_print_diff_regexp_incompat_msg 'assert_output_equals_golden'
+    return 1
   fi
 
   local -r golden_file_path="${1-}"
   local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:+1}"
 
-  if [ -z "$golden_file_path" ]; then
-    echo "Golden file path was not given or it was empty." \
-    | batslib_decorate 'ERROR: assert_output_equals_golden' \
-    | fail
-    return $?
-  fi
-  if [ ! -e "$golden_file_path" ]; then
-    echo "Golden file was not found. File path: '$golden_file_path'" \
-    | batslib_decorate 'ERROR: assert_output_equals_golden' \
-    | fail
-    return $?
+  if ! _assert_golden_validate_file_path 'assert_output_equals_golden' 'Golden file' "$golden_file_path"; then
+    return 1
   fi
 
   local golden_file_contents=
@@ -596,46 +568,22 @@ assert_file_equals_golden() {
   done
 
   if [ $# -ne 2 ]; then
-    echo "Incorrect number of arguments: $#. Expected 2 argument." \
-    | batslib_decorate 'ERROR: assert_file_equals_golden' \
-    | fail
-    return $?
+    _assert_golden_print_incorrect_number_of_arguments_msg 'assert_file_equals_golden' "$#" 2
+    return 1
   fi
 
   if (( show_diff )) && (( is_mode_regexp )); then
-    echo "\`--diff' not supported with \`--regexp'" \
-    | batslib_decorate 'ERROR: assert_file_equals_golden' \
-    | fail
-    return $?
+    _assert_golden_print_diff_regexp_incompat_msg 'assert_file_equals_golden'
+    return 1
   fi
 
   local -r target_file_path="${1-}"
   local -r golden_file_path="${2-}"
   local -r -i update_goldens_on_failure="${BATS_ASSERT_UPDATE_GOLDENS_ON_FAILURE:+1}"
 
-  if [ -z "$target_file_path" ]; then
-    echo "Target file path was not given or it was empty." \
-    | batslib_decorate 'ERROR: assert_file_equals_golden' \
-    | fail
-    return $?
-  fi
-  if [ ! -e "$target_file_path" ]; then
-    echo "Target file was not found. File path: '$target_file_path'" \
-    | batslib_decorate 'ERROR: assert_file_equals_golden' \
-    | fail
-    return $?
-  fi
-  if [ -z "$golden_file_path" ]; then
-    echo "Golden file path was not given or it was empty." \
-    | batslib_decorate 'ERROR: assert_file_equals_golden' \
-    | fail
-    return $?
-  fi
-  if [ ! -e "$golden_file_path" ]; then
-    echo "Golden file was not found. File path: '$golden_file_path'" \
-    | batslib_decorate 'ERROR: assert_file_equals_golden' \
-    | fail
-    return $?
+  if ! _assert_golden_validate_file_path 'assert_file_equals_golden' 'Target file' "$target_file_path" \
+    && _assert_golden_validate_file_path 'assert_file_equals_golden' 'Golden file' "$golden_file_path"; then
+    return 1
   fi
 
   local target_file_contents=
@@ -722,6 +670,39 @@ assert_file_equals_golden() {
     fi
   fi
   return $assert_failed
+}
+
+_assert_golden_print_incorrect_number_of_arguments_msg() {
+  local -r assert_function_name="$1"
+  local -r -i actual_arg_count="$2"
+  local -r -i expected_arg_count="$3"
+
+  echo "Incorrect number of arguments: $actual_arg_count. Expected $expected_arg_count argument." \
+  | batslib_decorate "ERROR: $assert_function_name"
+}
+
+_assert_golden_print_diff_regexp_incompat_msg() {
+  local -r assert_function_name="$1"
+
+  echo "\`--diff' not supported with \`--regexp'" \
+  | batslib_decorate "ERROR: $assert_function_name"
+}
+
+_assert_golden_validate_file_path() {
+  local -r assert_function_name="$1"
+  local -r file_description="$2"
+  local -r file_path="$3"
+
+  if [ -z "$file_path" ]; then
+    echo "$file_description path was not given or it was empty." \
+    | batslib_decorate "ERROR: $assert_function_name"
+    return 1
+  fi
+  if [ ! -e "$file_path" ]; then
+    echo "$file_description was not found. File path: '$file_path'" \
+    | batslib_decorate "ERROR: $assert_function_name"
+    return 1
+  fi
 }
 
 _assert_golden_update_golden_file_contents_nonregexp() {
