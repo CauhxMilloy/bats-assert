@@ -170,10 +170,8 @@ assert_equals_golden() {
   local -i assert_failed=0
   if (( is_mode_regexp )); then
     if [[ ! '' =~ ^${golden_file_contents}$ ]] && [[ '' =~ ^${golden_file_contents}$ ]] || (( $? == 2 )); then
-      echo "Invalid extended regular expression in golden file: \`$golden_file_contents'" \
-      | batslib_decorate 'ERROR: assert_equals_golden' \
-      | fail
-      return $?
+      _assert_golden_print_invalid_extended_regular_expression_msg 'assert_equals_golden'
+      assert_failed=1
     elif ! [[ "$value" =~ ^${golden_file_contents}$ ]]; then
       assert_failed=1
     fi
@@ -369,10 +367,8 @@ assert_output_equals_golden() {
   local -i assert_failed=0
   if (( is_mode_regexp )); then
     if [[ ! '' =~ ^${golden_file_contents}$ ]] && [[ '' =~ ^${golden_file_contents}$ ]] || (( $? == 2 )); then
-      echo "Invalid extended regular expression in golden file: \`$golden_file_contents'" \
-      | batslib_decorate 'ERROR: assert_output_equals_golden' \
-      | fail
-      return $?
+      _assert_golden_print_invalid_extended_regular_expression_msg 'assert_output_equals_golden'
+      assert_failed=1
     elif ! [[ "$output" =~ ^${golden_file_contents}$ ]]; then
       assert_failed=1
     fi
@@ -580,10 +576,8 @@ assert_file_equals_golden() {
   local -i assert_failed=0
   if (( is_mode_regexp )); then
     if [[ ! '' =~ ^${golden_file_contents}$ ]] && [[ '' =~ ^${golden_file_contents}$ ]] || (( $? == 2 )); then
-      echo "Invalid extended regular expression in golden file: \`$golden_file_contents'" \
-      | batslib_decorate 'ERROR: assert_file_equals_golden' \
-      | fail
-      return $?
+      _assert_golden_print_invalid_extended_regular_expression_msg 'assert_file_equals_golden'
+      assert_failed=1
     elif ! [[ "$target_file_contents" =~ ^${golden_file_contents}$ ]]; then
       assert_failed=1
     fi
@@ -687,6 +681,12 @@ _assert_golden_read_golden_file_contents() {
   fi
 
   printf '%s' "$golden_file_contents"
+}
+
+_assert_golden_print_invalid_extended_regular_expression_msg() {
+  local -r assert_function_name="$1"
+  echo "Invalid extended regular expression in golden file." \
+  | batslib_decorate "ERROR: $assert_function_name"
 }
 
 _assert_golden_update_golden_file_contents_nonregexp() {
