@@ -559,8 +559,13 @@ __assert_golden__print_incorrect_number_of_arguments_msg() {
   local -r -i actual_arg_count="$2"
   local -r -i expected_arg_count="$3"
 
-  echo "Incorrect number of arguments: $actual_arg_count. Expected $expected_arg_count argument." \
-  | batslib_decorate "ERROR: $assert_function_name"
+  if [[ $expected_arg_count -eq 1 ]]; then
+    echo "Incorrect number of arguments: $actual_arg_count. Expected $expected_arg_count argument." \
+    | batslib_decorate "ERROR: $assert_function_name"
+  else
+    echo "Incorrect number of arguments: $actual_arg_count. Expected $expected_arg_count arguments." \
+    | batslib_decorate "ERROR: $assert_function_name"
+  fi
 }
 
 __assert_golden__print_diff_regexp_incompat_msg() {
