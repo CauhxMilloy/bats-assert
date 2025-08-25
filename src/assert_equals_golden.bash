@@ -162,7 +162,7 @@ assert_equals_golden() {
   fi
 
   local golden_file_contents=
-  if ! golden_file_contents="$(__assert_golden__read_golden_file_contents 'assert_equals_golden' "$golden_file_path" "$allow_empty")"; then
+  if ! __assert_golden__read_golden_file_contents 'assert_equals_golden' "$golden_file_path" "$allow_empty" 'golden_file_contents'; then
     return 1
   fi
 
@@ -337,7 +337,7 @@ assert_output_equals_golden() {
   fi
 
   local golden_file_contents=
-  if ! golden_file_contents="$(__assert_golden__read_golden_file_contents 'assert_output_equals_golden' "$golden_file_path" "$allow_empty")"; then
+  if ! __assert_golden__read_golden_file_contents 'assert_output_equals_golden' "$golden_file_path" "$allow_empty" 'golden_file_contents'; then
     return 1
   fi
 
@@ -512,12 +512,12 @@ assert_file_equals_golden() {
   fi
 
   local target_file_contents=
-  if ! target_file_contents="$(__assert_golden__read_file_contents 'assert_file_equals_golden' 'target file' "$target_file_path")"; then
+  if ! __assert_golden__read_file_contents 'assert_file_equals_golden' 'target file' "$target_file_path" 'target_file_contents'; then
     return 1
   fi
 
   local golden_file_contents=
-  if ! golden_file_contents="$(__assert_golden__read_golden_file_contents 'assert_file_equals_golden' "$golden_file_path" "$allow_empty")"; then
+  if ! __assert_golden__read_golden_file_contents 'assert_file_equals_golden' "$golden_file_path" "$allow_empty" 'golden_file_contents'; then
     return 1
   fi
 
@@ -591,36 +591,34 @@ __assert_golden__read_golden_file_contents() {
   local -r assert_function_name="$1"
   local -r golden_file_path="$2"
   local -r -i allow_empty="$3"
+  local -r output_variable_name="$4"
 
-  local golden_file_contents=
-  if ! golden_file_contents="$(__assert_golden__read_file_contents "$assert_function_name" 'golden file' "$golden_file_path")"; then
+  local -n golden_file_contents_ref="$output_variable_name"
+  if ! __assert_golden__read_file_contents "$assert_function_name" 'golden file' "$golden_file_path" 'golden_file_contents_ref'; then
     return 1
   fi
-  if [ -z "$golden_file_contents" ] && ! (( allow_empty )); then
+  if [ -z "$golden_file_contents_ref" ] && ! (( allow_empty )); then
     echo "Golden file contents is empty. This may be an authoring error. Use \`--allow-empty\` if this is intentional." \
-    | batslib_decorate "ERROR: $assert_function_name" >&2
+    | batslib_decorate "ERROR: $assert_function_name"
     return 1
   fi
-
-  printf '%s' "$golden_file_contents"
 }
 
 __assert_golden__read_file_contents() {
   local -r assert_function_name="$1"
   local -r file_description="$2"
   local -r file_path="$3"
+  local -r output_variable_name="$4"
 
-  local file_contents=
+  local -n file_contents_ref="$output_variable_name"
   # Load the contents from the file.
   # Append a period (to be removed on the next line) so that trailing new lines are preserved.
-  if ! file_contents="$(cat "$file_path" 2>/dev/null && printf '.')"; then
+  if ! file_contents_ref="$(cat "$file_path" 2>/dev/null && printf '.')"; then
     echo "Failed to read ${file_description}. File path: '$file_path'" \
-    | batslib_decorate "ERROR: $assert_function_name" >&2
+    | batslib_decorate "ERROR: $assert_function_name"
     return 1
   fi
-  file_contents="${file_contents%.}"
-
-  printf '%s' "$file_contents"
+  file_contents_ref="${file_contents_ref%.}"
 }
 
 __assert_golden__print_invalid_extended_regular_expression_msg() {
