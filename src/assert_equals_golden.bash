@@ -193,7 +193,6 @@ assert_equals_golden() {
       else
         __assert_golden__update_golden_file_contents_regexp 'assert_equals_golden' "$value" "$golden_file_path"
       fi
-      __assert_golden__print_updated_golden_file_msg 'assert_equals_golden'
     fi
   fi
   return $assert_failed
@@ -368,7 +367,6 @@ assert_output_equals_golden() {
       else
         __assert_golden__update_golden_file_contents_regexp 'assert_output_equals_golden' "$output" "$golden_file_path"
       fi
-      __assert_golden__print_updated_golden_file_msg 'assert_output_equals_golden'
     fi
   fi
   return $assert_failed
@@ -548,7 +546,6 @@ assert_file_equals_golden() {
       else
         __assert_golden__update_golden_file_contents_regexp 'assert_file_equals_golden' "$target_file_contents" "$golden_file_path"
       fi
-      __assert_golden__print_updated_golden_file_msg 'assert_file_equals_golden'
     fi
   fi
   return $assert_failed
@@ -688,6 +685,8 @@ __assert_golden__update_golden_file_contents_nonregexp() {
   if ! printf '%s' "$new_golden_contents" 2>/dev/null > "$golden_file_path"; then
     echo "Failed to write into golden file during update: '$golden_file_path'." \
     | batslib_decorate "FAIL: $assert_function_name"
+  else
+    __assert_golden__print_updated_golden_file_msg "$assert_function_name"
   fi
 }
 
@@ -735,6 +734,8 @@ __assert_golden__update_golden_file_contents_regexp() {
       fi
       printf '%s' "$best_guess_for_line" >> "$golden_file_path"
     done
+
+    __assert_golden__print_updated_golden_file_msg "$assert_function_name"
   fi
 }
 
