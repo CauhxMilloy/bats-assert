@@ -58,7 +58,7 @@ save_temp_file_path_and_run() {
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -79,7 +79,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -105,7 +105,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -135,7 +135,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -161,7 +161,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -232,7 +232,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -258,7 +258,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (0 lines):
 
@@ -283,7 +283,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -308,7 +308,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -392,7 +392,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 *
@@ -410,7 +410,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 .*
@@ -497,7 +497,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -515,7 +515,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -536,7 +536,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -562,7 +562,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -592,7 +592,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -618,7 +618,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -698,7 +698,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -724,7 +724,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -750,7 +750,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (0 lines):
 
@@ -776,7 +776,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (0 lines):
 
@@ -801,7 +801,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -826,7 +826,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -851,7 +851,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -911,7 +911,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 1c1
 < b
@@ -929,7 +929,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 1a2
 > 
@@ -945,7 +945,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 3a4
 > 
@@ -961,7 +961,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 2d1
 < 
@@ -977,7 +977,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 4d3
 < 
@@ -1025,7 +1025,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 1,2c1
 < 
@@ -1044,7 +1044,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 2d1
 < 
@@ -1060,7 +1060,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $test_temp_golden_file
 1a2
 > 
@@ -1174,7 +1174,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -1195,7 +1195,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -1221,7 +1221,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -1251,7 +1251,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -1277,7 +1277,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -1339,7 +1339,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -1365,7 +1365,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (0 lines):
 
@@ -1390,7 +1390,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -1570,7 +1570,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 ..
@@ -1588,7 +1588,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 .
@@ -1606,7 +1606,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 [b]
@@ -1627,7 +1627,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (2 lines):
 [abc]+
@@ -1656,7 +1656,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 [abc]+
@@ -1749,7 +1749,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -1768,7 +1768,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -1792,7 +1792,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -1820,7 +1820,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -1844,7 +1844,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -1905,7 +1905,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -1929,7 +1929,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (0 lines):
 
@@ -1952,7 +1952,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -1975,7 +1975,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -2058,7 +2058,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 *
@@ -2074,7 +2074,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 .*
@@ -2119,7 +2119,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 1c1
 < b
@@ -2135,7 +2135,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 1a2
 > 
@@ -2149,7 +2149,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 3a4
 > 
@@ -2163,7 +2163,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 2d1
 < 
@@ -2177,7 +2177,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 4d3
 < 
@@ -2217,7 +2217,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 1,2c1
 < 
@@ -2234,7 +2234,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 2d1
 < 
@@ -2248,7 +2248,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $test_temp_golden_file
 1a2
 > 
@@ -2353,7 +2353,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -2372,7 +2372,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -2396,7 +2396,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -2424,7 +2424,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -2448,7 +2448,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -2502,7 +2502,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -2526,7 +2526,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (0 lines):
 
@@ -2549,7 +2549,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -2704,7 +2704,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 ..
@@ -2720,7 +2720,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 .
@@ -2736,7 +2736,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 [b]
@@ -2755,7 +2755,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (2 lines):
 [abc]+
@@ -2782,7 +2782,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 [abc]+
@@ -2868,7 +2868,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -2886,7 +2886,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -2909,7 +2909,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -2936,7 +2936,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -2959,7 +2959,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -3009,7 +3009,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -3032,7 +3032,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (0 lines):
 
@@ -3054,7 +3054,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -3168,7 +3168,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 *
@@ -3183,7 +3183,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 .*
@@ -3223,7 +3223,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 1c1
 < b
@@ -3238,7 +3238,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 1a2
 > 
@@ -3251,7 +3251,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 3a4
 > 
@@ -3264,7 +3264,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 2d1
 < 
@@ -3277,7 +3277,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 4d3
 < 
@@ -3313,7 +3313,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 1,2c1
 < 
@@ -3329,7 +3329,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 2d1
 < 
@@ -3342,7 +3342,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $test_temp_golden_file
 1a2
 > 
@@ -3474,7 +3474,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -3492,7 +3492,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -3515,7 +3515,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -3542,7 +3542,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -3565,7 +3565,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 a
@@ -3615,7 +3615,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 a
@@ -3638,7 +3638,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (0 lines):
 
@@ -3660,7 +3660,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 
@@ -3834,7 +3834,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 ..
@@ -3849,7 +3849,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 .
@@ -3864,7 +3864,7 @@ ERR_MSG
 
   assert_test_fail <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (1 lines):
 [b]
@@ -3882,7 +3882,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (2 lines):
 [abc]+
@@ -3908,7 +3908,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $test_temp_golden_file
 golden contents (3 lines):
 [abc]+
@@ -3987,7 +3987,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4032,7 +4032,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4070,7 +4070,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match golden --
+-- assert_equals_golden: value does not match golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4121,7 +4121,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4166,7 +4166,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4204,7 +4204,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4255,7 +4255,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -4308,7 +4308,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -4360,7 +4360,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -4414,7 +4414,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- value does not match regexp golden --
+-- assert_equals_golden: value does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -4468,7 +4468,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4512,7 +4512,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4548,7 +4548,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match golden --
+-- assert_output_equals_golden: output does not match golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4598,7 +4598,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4642,7 +4642,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4678,7 +4678,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4728,7 +4728,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -4780,7 +4780,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -4831,7 +4831,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -4884,7 +4884,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- output does not match regexp golden --
+-- assert_output_equals_golden: output does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -4938,7 +4938,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -4980,7 +4980,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -5015,7 +5015,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match golden --
+-- assert_file_equals_golden: file contents does not match golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -5063,7 +5063,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -5105,7 +5105,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -5140,7 +5140,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (1 lines):
 wrong output
@@ -5188,7 +5188,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -5238,7 +5238,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -5287,7 +5287,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
@@ -5338,7 +5338,7 @@ ERR_MSG
   # Need to use variable to match trailing end lines caused by using `--keep-empty-lines`.
   expected="$(cat <<ERR_MSG
 
--- file contents does not match regexp golden --
+-- assert_file_equals_golden: file contents does not match regexp golden --
 Golden file: $temp_golden_file
 golden contents (2 lines):
 [^a].[op]
