@@ -180,7 +180,7 @@ assert_equals_golden() {
 
   if (( assert_failed )); then
     if (( show_diff )); then
-      __assert_golden__print_not_matching_show_diff_msg 'assert_equals_golden' 'value' "$value" "$golden_file_contents"
+      __assert_golden__print_not_matching_show_diff_msg 'assert_equals_golden' 'value' "$value" "$golden_file_path" "$golden_file_contents"
     elif (( is_mode_regexp )); then
       __assert_golden__print_not_matching_regexp_msg 'assert_equals_golden' 'value' "$value" "$golden_file_path" "$golden_file_contents"
     else
@@ -354,7 +354,7 @@ assert_output_equals_golden() {
 
   if (( assert_failed )); then
     if (( show_diff )); then
-      __assert_golden__print_not_matching_show_diff_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_contents"
+      __assert_golden__print_not_matching_show_diff_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_path" "$golden_file_contents"
     elif (( is_mode_regexp )); then
       __assert_golden__print_not_matching_regexp_msg 'assert_output_equals_golden' 'output' "$output" "$golden_file_path" "$golden_file_contents"
     else
@@ -533,7 +533,7 @@ assert_file_equals_golden() {
 
   if (( assert_failed )); then
     if (( show_diff )); then
-      __assert_golden__print_not_matching_show_diff_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_contents"
+      __assert_golden__print_not_matching_show_diff_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_path" "$golden_file_contents"
     elif (( is_mode_regexp )); then
       __assert_golden__print_not_matching_regexp_msg 'assert_file_equals_golden' 'file contents' "$target_file_contents" "$golden_file_path" "$golden_file_contents"
     else
@@ -635,6 +635,7 @@ __assert_golden__print_not_matching_show_diff_msg() {
   local -r contents_description="$2"
   local -r actual_contents="$3"
   local -r golden_file_path="$4"
+  local -r golden_file_contents="$5"
 
   {
     echo "Golden file: $golden_file_path"
