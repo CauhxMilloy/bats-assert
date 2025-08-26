@@ -1677,12 +1677,15 @@ ERR_MSG
 @test "assert_equals_golden --regexp: fails if regex golden is not a valid extended regular expression" {
   tested_value="$output"
   output='UNUSED'
-  run assert_equals_golden --regexp "$tested_value" <(printf '[.*')
+  save_temp_file_path_and_run assert_equals_golden --regexp "$tested_value" <(printf '[.*')
 
-  assert_test_fail <<'ERR_MSG'
+  assert_test_fail <<ERR_MSG
 
 -- ERROR: assert_equals_golden --
-Invalid extended regular expression in golden file: `[.*'
+Invalid extended regular expression in golden file.
+Golden file: ${test_temp_golden_file}
+golden contents (1 lines):
+[.*
 --
 ERR_MSG
 }
@@ -2801,12 +2804,15 @@ ERR_MSG
 }
 
 @test "assert_output_equals_golden --regexp: fails if regex golden is not a valid extended regular expression" {
-  run assert_output_equals_golden --regexp <(printf '[.*')
+  save_temp_file_path_and_run assert_output_equals_golden --regexp <(printf '[.*')
 
-  assert_test_fail <<'ERR_MSG'
+  assert_test_fail <<ERR_MSG
 
 -- ERROR: assert_output_equals_golden --
-Invalid extended regular expression in golden file: `[.*'
+Invalid extended regular expression in golden file.
+Golden file: ${test_temp_golden_file}
+golden contents (1 lines):
+[.*
 --
 ERR_MSG
 }
@@ -3075,7 +3081,7 @@ ERR_MSG
   assert_test_fail <<'ERR_MSG'
 
 -- ERROR: assert_file_equals_golden --
-Incorrect number of arguments: 0. Expected 2 argument.
+Incorrect number of arguments: 0. Expected 2 arguments.
 --
 ERR_MSG
 }
@@ -3086,7 +3092,7 @@ ERR_MSG
   assert_test_fail <<'ERR_MSG'
 
 -- ERROR: assert_file_equals_golden --
-Incorrect number of arguments: 3. Expected 2 argument.
+Incorrect number of arguments: 3. Expected 2 arguments.
 --
 ERR_MSG
 }
@@ -3356,7 +3362,7 @@ ERR_MSG
   assert_test_fail <<'ERR_MSG'
 
 -- ERROR: assert_file_equals_golden --
-Incorrect number of arguments: 0. Expected 2 argument.
+Incorrect number of arguments: 0. Expected 2 arguments.
 --
 ERR_MSG
 }
@@ -3367,7 +3373,7 @@ ERR_MSG
   assert_test_fail <<'ERR_MSG'
 
 -- ERROR: assert_file_equals_golden --
-Incorrect number of arguments: 3. Expected 2 argument.
+Incorrect number of arguments: 3. Expected 2 arguments.
 --
 ERR_MSG
 }
@@ -3681,7 +3687,7 @@ ERR_MSG
   assert_test_fail <<'ERR_MSG'
 
 -- ERROR: assert_file_equals_golden --
-Incorrect number of arguments: 0. Expected 2 argument.
+Incorrect number of arguments: 0. Expected 2 arguments.
 --
 ERR_MSG
 }
@@ -3692,7 +3698,7 @@ ERR_MSG
   assert_test_fail <<'ERR_MSG'
 
 -- ERROR: assert_file_equals_golden --
-Incorrect number of arguments: 3. Expected 2 argument.
+Incorrect number of arguments: 3. Expected 2 arguments.
 --
 ERR_MSG
 }
@@ -3927,12 +3933,15 @@ ERR_MSG
 }
 
 @test "assert_file_equals_golden --regexp: fails if regex golden is not a valid extended regular expression" {
-  run assert_file_equals_golden --regexp <(printf 'abc') <(printf '[.*')
+  save_temp_file_path_and_run assert_file_equals_golden --regexp <(printf 'abc') <(printf '[.*')
 
-  assert_test_fail <<'ERR_MSG'
+  assert_test_fail <<ERR_MSG
 
 -- ERROR: assert_file_equals_golden --
-Invalid extended regular expression in golden file: `[.*'
+Invalid extended regular expression in golden file.
+Golden file: ${test_temp_golden_file}
+golden contents (1 lines):
+[.*
 --
 ERR_MSG
 }
